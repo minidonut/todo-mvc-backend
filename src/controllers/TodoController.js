@@ -12,3 +12,8 @@ export const addTodo = asyncMiddleware(async (req, res) => {
   await todo.save();
   res.send(todo);
 });
+
+export const updateTodo = asyncMiddleware(async (req, res) => {
+  throwErrorIfExists(req);
+
+});

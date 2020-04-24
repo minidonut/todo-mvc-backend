@@ -3,7 +3,7 @@ import lusca from "lusca";
 import express from "express";
 import bodyParser from "body-parser";
 import cookieParser from "cookie-parser";
-import { body, header } from "express-validator";
+import { body, header, param } from "express-validator";
 import { errorHandler } from "./modules/errors";
 import * as TodoController from "./controllers/TodoController";
 
@@ -17,11 +17,31 @@ app.use(cors({ origin: true, credentials: true }));
 app.use(lusca.xframe("SAMEORIGIN"));
 app.use(lusca.xssProtection(true));
 
+app.get(
+  "/todos",
+  [header("userId").not().isEmpty().withMessage("Required header missing: userId")],
+  TodoController.getAllTodo,
+);
+
 app.post(
   "/todos",
   [body("content").not().isEmpty().withMessage("Required value missing: content"),
   header("userId").not().isEmpty().withMessage("Required header missing: userId")],
   TodoController.addTodo,
+);
+
+app.put(
+  "/todos/:id",
+  [param("id").not().isEmpty().withMessage("Required parameter missing: id"),
+  header("userId").not().isEmpty().withMessage("Required header missing: userId")],
+  TodoController.updateTodo,
+);
+
+app.delete(
+  "/todos/:id",
+  [param("id").not().isEmpty().withMessage("Required parameter missing: id"),
+  header("userId").not().isEmpty().withMessage("Required header missing: userId")],
+  TodoController.deleteTodo,
 );
 
 app.use(errorHandler);
