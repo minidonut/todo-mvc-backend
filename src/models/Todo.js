@@ -1,30 +1,32 @@
-import AWS from "aws-sdk";
-
-const dynamoDB = new AWS.DynamoDB({
-  apiVersion: "2012-08-10",
+import dynamoose from "dynamoose";
+dynamoose.AWS.config.update({
   region: "ap-northeast-2",
 });
-const putItem = (param) => new Promise((resolve, reject) => {
-  dynamoDB.putItem(param, (err, data) => {
-    if (err) reject(err);
-    resolve(data);
-  });
+
+const TodoSchema = new dynamoose.Schema({
+  userId: {
+    type: String,
+    hashKey: true,
+  },
+  id: {
+    type: String,
+    rangeKey: true,
+  },
+  content: {
+    required: true,
+    type: String,
+  },
+  done: {
+    type: Boolean,
+    required: true,
+    default: false,
+  },
+}, {
+  timestamps: true,
 });
 
-
-const add = async () => {
-  const res = await putItem({
-    Item: {
-      "user": { "S": "1" },
-      "id": { "S": "1" },
-      "content": { "S": "aspdjqwd" },
-    },
-    ReturnConsumedCapacity: "NONE",
-    TableName: "todo",
-  });
-}
-
-
-export default {
-  add,
+TodoSchema.statics.getAll = async (userId) => {
+  return Todo.query("userId").eq(userId).exec();
 };
+
+export const Todo = dynamoose.model("todo", TodoSchema);

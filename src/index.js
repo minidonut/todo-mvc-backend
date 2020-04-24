@@ -1,16 +1,26 @@
 import cors from "cors";
+import lusca from "lusca";
 import express from "express";
 import bodyParser from "body-parser";
+import cookieParser from "cookie-parser";
+import { body, query } from "express-validator/check";
+import * as TodoController from "./controllers/TodoController";
 
 const app = express();
 
 app.set("port", process.env.PORT || 3101);
-app.use(bodyParser.json({ limit: "50mb" }));
+app.use(cookieParser());
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors({ origin: true, credentials: true }));
+app.use(lusca.xframe("SAMEORIGIN"));
+app.use(lusca.xssProtection(true));
 
-app.get("/ping", (req, res) => {
-  res.send("pong");
-});
+app.post(
+  "/todo",
+  [body("content").not().isEmpty().withMessage("Required value missing: content")],
+  TodoController.addTodo,
+);
 
 app.listen(app.get("port"), () => {
   console.log(`

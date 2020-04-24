@@ -1,7 +1,14 @@
-import Todo from "../src/models/Todo";
+import { Todo } from "../src/models/Todo";
 
 describe("Todo dymamodb model", () => {
-  it("can add entity", async () => {
-    await Todo.add();
+  it.skip("can add entity", async () => {
+    const todo = new Todo({ userId: "1", id: "4", content: "wow" });
+    const res = await todo.save();
+    console.log(res);
+  });
+
+  it("get todos by userId", async () => {
+    const todos = await Todo.getAll(1);
+    console.log(todos);
   });
 });
