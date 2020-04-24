@@ -7,7 +7,7 @@
   "type": "module",
   "scripts": {
     "dev": "AWS_PROFILE=todo-mvc nodemon src/index.js",
-    "test": "jest"
+    "test": "AWS_PROFILE=todo-mvc jest"
   },
   "dependencies": {
     "aws-sdk": "^2.662.0",
@@ -16,6 +16,7 @@
     "express": "^4.17.1"
   },
   "devDependencies": {
+    "@babel/plugin-transform-modules-commonjs": "^7.9.0",
     "jest": "^25.4.0",
     "nodemon": "^2.0.3"
   }

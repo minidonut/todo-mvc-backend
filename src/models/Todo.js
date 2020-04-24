@@ -1,6 +1,9 @@
 import AWS from "aws-sdk";
 
-const dynamoDB = new AWS.DynamoDB({ apiVersion: "2012-08-10" });
+const dynamoDB = new AWS.DynamoDB({
+  apiVersion: "2012-08-10",
+  region: "ap-northeast-2",
+});
 const putItem = (param) => new Promise((resolve, reject) => {
   dynamoDB.putItem(param, (err, data) => {
     if (err) reject(err);
@@ -12,12 +15,12 @@ const putItem = (param) => new Promise((resolve, reject) => {
 const add = async () => {
   const res = await putItem({
     Item: {
-      "user": "1",
-      "id": "1",
-      "content": "aspdjqwd",
+      "user": { "S": "1" },
+      "id": { "S": "1" },
+      "content": { "S": "aspdjqwd" },
     },
     ReturnConsumedCapacity: "NONE",
-    TableName: "todo-mvc",
+    TableName: "todo",
   });
 }
 
