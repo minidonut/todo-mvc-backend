@@ -4,9 +4,8 @@
   "main": "index.js",
   "author": "minidonut <nycom13@gmail.com>",
   "license": "MIT",
-  "type": "module",
   "scripts": {
-    "dev": "AWS_PROFILE=todo-mvc nodemon src/index.js",
+    "dev": "AWS_PROFILE=todo-mvc nodemon -r esm src/index.js",
     "test": "AWS_PROFILE=todo-mvc jest"
   },
   "dependencies": {
@@ -15,6 +14,7 @@
     "cookie-parser": "^1.4.5",
     "cors": "^2.8.5",
     "dynamoose": "^1.11.1",
+    "esm": "^3.2.25",
     "express": "^4.17.1",
     "express-validator": "^6.4.0",
     "lusca": "^1.6.1"

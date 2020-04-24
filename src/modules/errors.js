@@ -1,6 +1,5 @@
 import { validationResult } from "express-validator/check";
 export class BaseError extends Error {
-  status: number;
 }
 
 export class BadRequestError extends BaseError {
@@ -61,4 +60,9 @@ export const throwErrorIfExists = (req) => {
       };
     }).array());
   }
+};
+
+export const errorHandler = (error, req, res, next) => {
+  res.status(error.status || 500);
+  res.send(error);
 };

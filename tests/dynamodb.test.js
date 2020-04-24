@@ -1,4 +1,5 @@
 import { Todo } from "../src/models/Todo";
+/* global describe it */
 
 describe("Todo dymamodb model", () => {
   it.skip("can add entity", async () => {
