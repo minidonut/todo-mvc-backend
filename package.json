@@ -6,7 +6,8 @@
   "license": "MIT",
   "scripts": {
     "dev": "AWS_PROFILE=todo-mvc nodemon -r esm src/index.js",
-    "test": "AWS_PROFILE=todo-mvc jest"
+    "test": "AWS_PROFILE=todo-mvc jest",
+    "start": "NODE_ENV=production pm2 start src/index.js"
   },
   "dependencies": {
     "aws-sdk": "^2.662.0",
