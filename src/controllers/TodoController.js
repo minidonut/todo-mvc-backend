@@ -23,7 +23,16 @@ export const getAllTodo = asyncMiddleware(async (req, res) => {
 
 export const updateTodo = asyncMiddleware(async (req, res) => {
   throwErrorIfExists(req);
+  const { userid: userId } = req.headers;
+  const { id } = req.params;
+  const { done, content } = req.body;
 
+  const attributes = {};
+  if (done !== undefined) attributes["done"] = done;
+  if (content !== undefined) attributes["content"] = content;
+
+  const todo = await Todo.update({ userId, id }, { $PUT: attributes });
+  res.send(todo);
 });
 
 export const deleteTodo = asyncMiddleware(async (req, res) => {
