@@ -37,5 +37,9 @@ export const updateTodo = asyncMiddleware(async (req, res) => {
 
 export const deleteTodo = asyncMiddleware(async (req, res) => {
   throwErrorIfExists(req);
+  const { userid: userId } = req.headers;
+  const { id } = req.params;
 
+  const result = await Todo.delete({ userId, id });
+  res.sendStatus(200);
 });
