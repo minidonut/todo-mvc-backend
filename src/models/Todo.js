@@ -26,7 +26,7 @@ const TodoSchema = new dynamoose.Schema({
 });
 
 TodoSchema.statics.getAll = async (userId) => {
-  return Todo.query("userId").eq(userId).exec();
+  return Todo.query("userId").eq(userId).descending().exec();
 };
 
 export const Todo = dynamoose.model("todo", TodoSchema);
